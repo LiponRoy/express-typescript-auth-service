@@ -1,6 +1,6 @@
-import { application } from "express";
 import mongoose from "mongoose";
 import config from "./config";
+import app from "./app";
 
 
 async function main() {
@@ -8,11 +8,14 @@ async function main() {
   
     try {
 
+      // database connection
         await mongoose.connect(config.database_url as string);
+        console.log(`Database connected , Server is running`);
 
-        application.listen(config.port, () => {
-            console.log(`Database connected , Server is running on http://localhost:${config.port}`);
-          });
+      // server running
+          app.listen(config.port,()=>{
+            console.log("Application listening on port",config.port);
+          })
         
     } catch (error) {
         console.log("Database connection error: " + error)
